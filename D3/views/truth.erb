@@ -1,0 +1,129 @@
+<DOCTYPE html>
+<html lang="en">
+	<head>
+		<h1> THE TRUTH </h1>
+	</head>
+	<body >
+		<a href="/"> Return to Home Page </a>
+		<p id="errorMessage"></p>
+
+		<p id="params">
+			TRUE: <%= truthValue %> 
+			FALSE: <%= falseValue %>
+			SIZE:  <%= size %>
+		</p>
+		
+		<script>
+			// Get Parameters 
+			var url = window.location.search;
+			var trueStart = url.indexOf("trueValue");
+			var falseStart = url.indexOf("falseValue");
+			var sizeStart = url.indexOf("size");
+			var truthValue = url.substring(trueStart + 10 ,falseStart - 1);
+			var falseValue = url.substring(falseStart + 11, sizeStart - 1);
+			var size = url.substring(sizeStart + 5);
+
+			//document.getElementById("truthValue").innerHTML = truthValue;
+			//document.getElementById("falseValue").innerHTML = falseValue;
+			//document.getElementById("size").innerHTML = size;
+			//Check Parameters 
+			//if(truthValue != falseValue && truthValue.length == 1 && falseValue.length == 1 && size >= 2){
+
+				var i;
+				var j;
+				var k;
+				var binaryString;
+				var zeroString = "0";
+				var truthTable;
+				var rows = Math.pow(2, size);
+				var xorResult = 0;
+				var andResult = 1;
+				var orResult = 0;
+
+
+				// Create Table Headers.
+				// *Size* input columns and 3 results columns 
+				// for AND, OR, and XOR
+				var table = document.createElement('table');
+				for(var  i = size - 1; i >= 0; i--){
+					var th = document.createElement('th');
+				    var numberText = document.createTextNode(i.toString());
+				    th.appendChild(numberText);
+				    table.appendChild(th);
+				} 
+				var andHead = document.createElement('th');
+				var orHead = document.createElement('th');
+				var xorHead = document.createElement('th');
+				var andHeadText = document.createTextNode("AND");
+				var orHeadText = document.createTextNode("OR");
+				var xorHeadText = document.createTextNode("XOR");
+				andHead.appendChild(andHeadText);
+				orHead.appendChild(orHeadText);
+				xorHead.appendChild(xorHeadText);
+				table.appendChild(andHead);
+				table.appendChild(orHead);
+				table.appendChild(xorHead);
+
+				// Populate the input columns of the table by converting the row number to a binary string 
+				// and parsing it  
+				for (var j = 0; j < rows; j++){
+					var tr = document.createElement('tr');
+					binaryString = j.toString(2);
+					//Pad Strings to contain leading zeros
+					while(binaryString.length < size) binaryString = zeroString.concat(binaryString);
+					for(var k = 0; k < size; k++){
+				    	var td = document.createElement('td');
+				    	var elementString = binaryString.substring(k,k+1);
+				    	var elementText = document.createTextNode(elementString);
+					    td.appendChild(elementText);
+					    tr.appendChild(td);
+
+					    // Calculate XOR results 
+					    if(binaryString.charAt(k) == "1" && xorResult == 0){
+					    	xorResult = 1;
+					    } else if(binaryString.charAt(k) == "1" && xorResult == 1) {
+					    	xorResult = 0;
+					    }
+
+					    // Calculate AND results
+					    if(binaryString.charAt(k) == "0") andResult = 0;
+
+					    // Calculate OR results
+					    if(binaryString.charAt(k) == "1") orResult = 1;
+
+					}
+						// Add results to row
+						var and = document.createElement('th');
+						var or = document.createElement('th');
+						var xor = document.createElement('th');
+						var andText = document.createTextNode(andResult.toString());
+						var orText = document.createTextNode(orResult.toString());
+						var xorText = document.createTextNode(xorResult.toString());
+						and.appendChild(andText);
+						or.appendChild(orText);
+						xor.appendChild(xorText);
+						tr.appendChild(and);
+						tr.appendChild(or);
+						tr.appendChild(xor);
+
+						// Add row to table
+					    table.appendChild(tr);	
+
+					    //Reset result Values 
+					    xorResult = 0;
+					    andResult = 1;
+					    orResult = 0;
+				
+				}
+
+				document.body.appendChild(table);
+			//} else {
+				// Invalid Parameters
+				// Display error message 
+			//	document.getElementById("errorMessage").innerHTML = "Incorrect Usage True and False values must be unique characters";
+			//}
+			//document.getElementById("truthTable").innerHTML = truthTable;
+		</script>
+	</body>
+</html>
+

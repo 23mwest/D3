@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description>Test that the link on the main screen to return back to the main screen, returns the user back to the main screen</description>
+   <name>HOME_REDIRECT_HOME</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>47d285b0-fd53-435c-9b01-7c0b6ec8f750</testCaseGuid>
+</TestCaseEntity>
